@@ -759,12 +759,12 @@
             
             <div class="input-group">
                 <label for="username">Usuário</label>
-                <input type="text" id="username" placeholder="Digite seu usuário">
+                <input type="text" id="username" placeholder="Digite seu usuário" value="">
             </div>
             
             <div class="input-group">
                 <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="Digite sua senha">
+                <input type="password" id="password" placeholder="Digite sua senha" value="">
             </div>
             
             <button class="login-btn" id="login-btn">
@@ -772,6 +772,12 @@
             </button>
             
             <div class="error-message" id="login-error"></div>
+            
+            <div style="margin-top: 20px; font-size: 14px; color: #777;">
+                <p><strong></strong></p>
+                <p> <strong></strong></p>
+                <p> <strong></strong></p>
+            </div>
         </div>
     </div>
 
@@ -783,7 +789,7 @@
                 <h1><i class="fas fa-columns"></i> Fishing Master Tarefas</h1>
                 <div class="user-info">
                     <i class="fas fa-user-circle"></i>
-                    <span id="current-user"></span>
+                    <span id="current-user">admin</span>
                     <button class="logout-btn" id="logout-btn">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
@@ -972,7 +978,7 @@
                     <div class="form-group">
                         <label for="task-assignee">Responsável</label>
                         <select id="task-assignee">
-                            <option value="LosMixas">LosMixas</option>
+                            <option value="admin">Admin</option>
                             <option value="Maykell">Maykell</option>
                             <option value="Anthony">Anthony</option>
                         </select>
@@ -993,9 +999,13 @@
     </div>
 
     <script>
-        // 🔐 CONFIGURAÇÃO SEGURA - Credenciais protegidas
-        // As credenciais são carregadas de forma segura
-        let CONFIG = {};
+        // Configuração do Supabase
+        const SUPABASE_URL = 'https://ymmqtopcyjhbctocqhum.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltbXF0b3BjeWpoYmN0b2NxaHVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NzQyOTksImV4cCI6MjA4NDE1MDI5OX0.UwFjVr5gyOhqwRkdAjdxbqqKdbjkqrf2uLsKwLCbB0c';
+        
+        // Credenciais fixas para login
+        const FIXED_USERNAME = 'LosMixas';
+        const FIXED_PASSWORD = 'Losman@';
         
         // Estado da aplicação
         let currentUser = null;
@@ -1048,77 +1058,10 @@
         const highPriorityTasksEl = document.getElementById('high-priority-tasks');
         const highPriorityProgressEl = document.getElementById('high-priority-progress');
         
-        // 🔐 Sistema de autenticação seguro
-        const VALID_USERS = {
-            // Usuários autorizados (não visíveis no código fonte)
-            // Estes dados são carregados de forma segura
-        };
-        
-        // 🔐 Carregar configuração segura
-        async function loadSecureConfig() {
-            try {
-                // Método 1: Tentar carregar de um arquivo externo (mais seguro)
-                // No GitHub Pages, você pode criar um arquivo config.js com:
-                // window.APP_CONFIG = { users: {...}, supabase: {...} }
-                
-                // Método 2: Usar hash de senhas (mais seguro que texto plano)
-                // Carregar usuários de forma segura
-                VALID_USERS['LosMixas'] = '7a8f9b2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1'; // hash de 'Losman@'
-                
-                // Configuração do Supabase (ainda visível, mas anon key é pública por design)
-                CONFIG.SUPABASE_URL = 'https://ymmqtopcyjhbctocqhum.supabase.co';
-                CONFIG.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltbXF0b3BjeWpoYmN0b2NxaHVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NzQyOTksImV4cCI6MjA4NDE1MDI5OX0.UwFjVr5gyOhqwRkdAjdxbqqKdbjkqrf2uLsKwLCbB0c';
-                
-                return true;
-            } catch (error) {
-                console.error('Erro ao carregar configuração:', error);
-                return false;
-            }
-        }
-        
-        // 🔐 Função de hash simples (apenas para demonstração)
-        // Em produção, use uma biblioteca como bcrypt ou serviços de auth
-        async function hashPassword(password) {
-            // Hash simples para demonstração
-            // EM PRODUÇÃO: Use um backend para autenticação real
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-        
-        // 🔐 Verificação segura de login
-        async function verifyLogin(username, password) {
-            try {
-                // Hash da senha fornecida
-                const passwordHash = await hashPassword(password);
-                
-                // Verificar se o usuário existe e a senha está correta
-                // EM PRODUÇÃO: Isso deve ser feito no backend
-                if (username === 'LosMixas') {
-                    const storedHash = '7a8f9b2d3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1';
-                    return passwordHash === storedHash;
-                }
-                
-                return false;
-            } catch (error) {
-                console.error('Erro na verificação:', error);
-                return false;
-            }
-        }
-        
         // Inicializar Supabase
-        async function initSupabase() {
+        function initSupabase() {
             try {
-                // Carregar configuração primeiro
-                await loadSecureConfig();
-                
-                supabaseClient = window.supabase.createClient(
-                    CONFIG.SUPABASE_URL, 
-                    CONFIG.SUPABASE_ANON_KEY
-                );
-                
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 console.log('Supabase inicializado com sucesso!');
                 return true;
             } catch (error) {
@@ -1155,41 +1098,19 @@
         }
         
         // Login
-        async function login(username, password) {
-            if (!username || !password) {
-                loginError.textContent = 'Usuário e senha são obrigatórios!';
-                return;
-            }
-            
-            showToast('Verificando credenciais...', 'info');
-            
-            try {
-                // Verificação segura
-                const isValid = await verifyLogin(username, password);
+        function login(username, password) {
+            if (username === FIXED_USERNAME && password === FIXED_PASSWORD) {
+                currentUser = username;
+                currentUserElement.textContent = username;
+                loginContainer.style.display = 'none';
+                kanbanContainer.style.display = 'block';
+                loginError.textContent = '';
                 
-                if (isValid) {
-                    currentUser = username;
-                    currentUserElement.textContent = username;
-                    loginContainer.style.display = 'none';
-                    kanbanContainer.style.display = 'block';
-                    loginError.textContent = '';
-                    
-                    // Limpar campos sensíveis
-                    usernameInput.value = '';
-                    passwordInput.value = '';
-                    
-                    if (await initSupabase()) {
-                        loadTasks();
-                        showToast('Login bem-sucedido!', 'success');
-                    }
-                } else {
-                    loginError.textContent = 'Usuário ou senha incorretos!';
-                    showToast('Credenciais inválidas', 'error');
+                if (initSupabase()) {
+                    loadTasks();
                 }
-            } catch (error) {
-                console.error('Erro no login:', error);
-                loginError.textContent = 'Erro ao processar login. Tente novamente.';
-                showToast('Erro no sistema de login', 'error');
+            } else {
+                loginError.textContent = 'Usuário ou senha incorretos!';
             }
         }
         
@@ -1198,7 +1119,6 @@
             currentUser = null;
             usernameInput.value = '';
             passwordInput.value = '';
-            currentUserElement.textContent = '';
             loginContainer.style.display = 'flex';
             kanbanContainer.style.display = 'none';
             tasks = [];
@@ -1207,8 +1127,6 @@
             // Destruir gráficos
             if (statusChart) statusChart.destroy();
             if (priorityChart) priorityChart.destroy();
-            
-            showToast('Logout realizado com sucesso', 'info');
         }
         
         // Carregar tarefas do Supabase
@@ -1230,6 +1148,8 @@
                 applyFilters();
                 updateCharts();
                 
+                showToast(`Carregadas ${tasks.length} tarefas`, 'success');
+                
             } catch (error) {
                 console.error('Erro ao carregar tarefas:', error);
                 showToast('Erro ao carregar tarefas. Usando dados de exemplo.', 'error');
@@ -1247,7 +1167,7 @@
                     status: 'done',
                     priority: 'medium',
                     due_date: '2024-01-20',
-                    assignee: 'LosMixas',
+                    assignee: 'admin',
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 },
@@ -1258,7 +1178,51 @@
                     status: 'progress',
                     priority: 'high',
                     due_date: '2024-01-25',
-                    assignee: 'LosMixas',
+                    assignee: 'admin',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                },
+                {
+                    id: 3,
+                    title: 'Design responsivo para mobile',
+                    description: 'Ajustar layout para dispositivos móveis',
+                    status: 'todo',
+                    priority: 'high',
+                    due_date: '2024-01-18',
+                    assignee: 'team',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                },
+                {
+                    id: 4,
+                    title: 'Documentação do projeto',
+                    description: 'Escrever documentação técnica e do usuário',
+                    status: 'todo',
+                    priority: 'low',
+                    due_date: '2024-01-30',
+                    assignee: 'team',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                },
+                {
+                    id: 5,
+                    title: 'Testes unitários',
+                    description: 'Implementar testes para funções críticas',
+                    status: 'progress',
+                    priority: 'medium',
+                    due_date: '2024-01-22',
+                    assignee: 'admin',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                },
+                {
+                    id: 6,
+                    title: 'Reunião de planejamento',
+                    description: 'Reunião com a equipe para planejar próximo sprint',
+                    status: 'done',
+                    priority: 'low',
+                    due_date: '2024-01-15',
+                    assignee: 'team',
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 }
@@ -1387,7 +1351,7 @@
             const priorityData = {
                 'high': tasks.filter(t => t.priority === 'high').length,
                 'medium': tasks.filter(t => t.priority === 'medium').length,
-                'low': tasks.filter(t => t.priority === 'low').length
+                'low': tasks.filter(t => t.status === 'low').length
             };
             
             // Configuração dos gráficos
@@ -1666,7 +1630,7 @@
             taskStatusSelect.value = 'todo';
             taskPrioritySelect.value = 'medium';
             taskDueDateInput.value = '';
-            taskAssigneeSelect.value = 'LosMixas';
+            taskAssigneeSelect.value = 'admin';
             taskModal.style.display = 'flex';
             showLoading(false);
         }
@@ -1683,7 +1647,7 @@
             taskStatusSelect.value = task.status;
             taskPrioritySelect.value = task.priority || 'medium';
             taskDueDateInput.value = task.due_date || '';
-            taskAssigneeSelect.value = task.assignee || 'LosMixas';
+            taskAssigneeSelect.value = task.assignee || 'admin';
             taskModal.style.display = 'flex';
             showLoading(false);
         }
@@ -1814,6 +1778,10 @@
         
         // Inicializar drag and drop após carregar tarefas
         setTimeout(() => initDragAndDrop(), 500);
+        
+        // Para debug: login automático
+        // setTimeout(() => login('admin', 'admin123'), 100);
     </script>
 </body>
+
 </html>
