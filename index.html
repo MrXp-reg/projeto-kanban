@@ -311,6 +311,41 @@
             transition: width 0.5s ease;
         }
 
+        /* Novos cards de estatísticas */
+        .cost-stat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .cost-stat h3 {
+            color: white;
+        }
+
+        .cost-stat .stat-value {
+            color: white;
+        }
+
+        .cost-stat .stat-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .dependencies-stat {
+            background: linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%);
+            color: white;
+        }
+
+        .dependencies-stat h3 {
+            color: white;
+        }
+
+        .dependencies-stat .stat-value {
+            color: white;
+        }
+
+        .dependencies-stat .stat-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
         /* Gráficos */
         .charts {
             display: grid;
@@ -447,23 +482,108 @@
             margin-bottom: 15px;
         }
 
-        .task-footer {
+        /* Novas seções da tarefa */
+        .task-section {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .task-section h4 {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .task-section-content {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .cost-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: #888;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin-top: 8px;
         }
 
-        .task-meta {
+        .estimated-cost {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .actual-cost {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .cost-overrun {
+            color: #e74c3c;
+            font-weight: 600;
+            background: #ffebee;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .dependencies-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 5px 0 0 0;
+        }
+
+        .dependencies-list li {
+            padding: 2px 0;
+            font-size: 0.8rem;
             display: flex;
-            gap: 15px;
             align-items: center;
+            gap: 5px;
+        }
+
+        .dependency-item {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin: 2px;
+        }
+
+        .dependency-warning {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-top: 5px;
+        }
+
+        .tags-container {
+            display: flex;
             flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #555;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
         }
 
         /* Badges de Prioridade */
@@ -516,6 +636,26 @@
             100% { opacity: 1; }
         }
 
+        /* Task Footer */
+        .task-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         /* Modal */
         .modal {
             display: none;
@@ -536,7 +676,7 @@
             padding: 30px;
             border-radius: 15px;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             max-height: 90vh;
             overflow-y: auto;
@@ -622,6 +762,87 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
+        /* Campos específicos do custo */
+        .cost-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .cost-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cost-field label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .cost-field input {
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        /* Campo de tags */
+        .tags-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            min-height: 50px;
+        }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 100px;
+            padding: 5px;
+        }
+
+        .modal-tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .modal-tag .remove-tag {
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-left: 3px;
+        }
+
+        .modal-tag .remove-tag:hover {
+            color: #ff9999;
+        }
+
+        /* Campo de dependências */
+        .dependencies-input {
+            min-height: 80px;
+        }
+
+        .method-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
         .modal-actions {
             display: flex;
             gap: 10px;
@@ -694,6 +915,10 @@
             .kanban-board {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -721,6 +946,14 @@
             
             .column {
                 min-height: 400px;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .cost-fields {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -832,6 +1065,12 @@
                     <option value="overdue">Atrasadas</option>
                 </select>
                 
+                <select class="filter-select" id="filter-dependencies">
+                    <option value="all">Todas as dependências</option>
+                    <option value="with">Com dependências</option>
+                    <option value="without">Sem dependências</option>
+                </select>
+                
                 <button class="clear-filters" id="clear-filters">
                     <i class="fas fa-times"></i> Limpar Filtros
                 </button>
@@ -846,13 +1085,16 @@
                 <div class="stat-subtitle">Todas as atividades</div>
             </div>
             
-            <div class="stat-card">
-                <h3><i class="fas fa-check-circle"></i> Taxa de Conclusão</h3>
-                <div class="stat-value" id="completion-rate">0%</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="completion-progress" style="width: 0%; background: #27ae60;"></div>
-                </div>
-                <div class="stat-subtitle">Concluídas / Total</div>
+            <div class="stat-card cost-stat">
+                <h3><i class="fas fa-money-bill-wave"></i> Custo Total</h3>
+                <div class="stat-value" id="total-cost">R$ 0</div>
+                <div class="stat-subtitle">Estimado vs Real</div>
+            </div>
+            
+            <div class="stat-card dependencies-stat">
+                <h3><i class="fas fa-link"></i> Dependências</h3>
+                <div class="stat-value" id="dependencies-count">0</div>
+                <div class="stat-subtitle">Tarefas com dependências</div>
             </div>
             
             <div class="stat-card">
@@ -862,15 +1104,6 @@
                     <div class="progress-fill" id="overdue-progress" style="width: 0%; background: #e74c3c;"></div>
                 </div>
                 <div class="stat-subtitle">Precisa de atenção</div>
-            </div>
-            
-            <div class="stat-card">
-                <h3><i class="fas fa-bolt"></i> Alta Prioridade</h3>
-                <div class="stat-value" id="high-priority-tasks">0</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="high-priority-progress" style="width: 0%; background: #c62828;"></div>
-                </div>
-                <div class="stat-subtitle">Urgente para resolver</div>
             </div>
         </div>
 
@@ -882,8 +1115,8 @@
             </div>
             
             <div class="chart-container">
-                <h3><i class="fas fa-chart-bar"></i> Distribuição por Prioridade</h3>
-                <canvas id="priority-chart"></canvas>
+                <h3><i class="fas fa-chart-bar"></i> Distribuição por Método</h3>
+                <canvas id="method-chart"></canvas>
             </div>
         </div>
 
@@ -985,6 +1218,56 @@
                     </div>
                 </div>
                 
+                <!-- 💰 CUSTO: Orçamento estimado vs Custo real -->
+                <div class="form-group">
+                    <label><i class="fas fa-money-bill-wave"></i> Custo</label>
+                    <div class="cost-fields">
+                        <div class="cost-field">
+                            <label for="estimated-cost">Orçamento Estimado (R$)</label>
+                            <input type="number" id="estimated-cost" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="cost-field">
+                            <label for="actual-cost">Custo Real (R$)</label>
+                            <input type="number" id="actual-cost" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 🔗 DEPENDÊNCIAS: Tarefas que dependem de outras -->
+                <div class="form-group">
+                    <label for="task-dependencies"><i class="fas fa-link"></i> Dependências</label>
+                    <textarea id="task-dependencies" class="dependencies-input" placeholder="Digite as IDs das tarefas que esta tarefa depende, separadas por vírgula (ex: 1, 5, 8)"></textarea>
+                    <small style="color: #666; font-size: 0.85rem;">IDs das tarefas que precisam ser concluídas antes desta</small>
+                </div>
+                
+                <!-- 🛠️ MÉTODO: Como a tarefa será resolvida -->
+                <div class="form-group">
+                    <label for="resolution-method"><i class="fas fa-tools"></i> Método de Resolução</label>
+                    <select id="resolution-method" class="method-select">
+                        <option value="">Selecione um método...</option>
+                        <option value="desenvolvimento">Desenvolvimento</option>
+                        <option value="design">Design</option>
+                        <option value="testes">Testes</option>
+                        <option value="documentacao">Documentação</option>
+                        <option value="reuniao">Reunião</option>
+                        <option value="analise">Análise</option>
+                        <option value="planejamento">Planejamento</option>
+                        <option value="implementacao">Implementação</option>
+                        <option value="revisao">Revisão</option>
+                        <option value="manutencao">Manutenção</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+                
+                <!-- Tags -->
+                <div class="form-group">
+                    <label for="task-tags"><i class="fas fa-tags"></i> Tags</label>
+                    <div class="tags-input-container" id="tags-container">
+                        <input type="text" id="task-tags-input" class="tag-input" placeholder="Digite uma tag e pressione Enter...">
+                    </div>
+                    <small style="color: #666; font-size: 0.85rem;">Pressione Enter para adicionar uma tag</small>
+                </div>
+                
                 <div class="modal-actions">
                     <button type="button" class="btn btn-secondary" id="cancel-btn">Cancelar</button>
                     <button type="submit" class="btn btn-primary" id="save-btn">
@@ -1014,8 +1297,9 @@
         let isEditing = false;
         let supabaseClient = null;
         let statusChart = null;
-        let priorityChart = null;
+        let methodChart = null;
         let filteredTasks = [];
+        let tags = [];
         
         // Elementos DOM
         const loginContainer = document.getElementById('login-container');
@@ -1038,6 +1322,15 @@
         const taskPrioritySelect = document.getElementById('task-priority');
         const taskDueDateInput = document.getElementById('task-due-date');
         const taskAssigneeSelect = document.getElementById('task-assignee');
+        
+        // Novos campos
+        const estimatedCostInput = document.getElementById('estimated-cost');
+        const actualCostInput = document.getElementById('actual-cost');
+        const taskDependenciesInput = document.getElementById('task-dependencies');
+        const resolutionMethodSelect = document.getElementById('resolution-method');
+        const tagsContainer = document.getElementById('tags-container');
+        const tagsInput = document.getElementById('task-tags-input');
+        
         const saveBtn = document.getElementById('save-btn');
         const saveBtnText = document.getElementById('save-btn-text');
         const saveBtnLoading = document.getElementById('save-btn-loading');
@@ -1047,16 +1340,15 @@
         const filterPriority = document.getElementById('filter-priority');
         const filterStatus = document.getElementById('filter-status');
         const filterDate = document.getElementById('filter-date');
+        const filterDependencies = document.getElementById('filter-dependencies');
         const clearFiltersBtn = document.getElementById('clear-filters');
         
         // Elementos de analytics
         const totalTasksEl = document.getElementById('total-tasks');
-        const completionRateEl = document.getElementById('completion-rate');
-        const completionProgressEl = document.getElementById('completion-progress');
+        const totalCostEl = document.getElementById('total-cost');
+        const dependenciesCountEl = document.getElementById('dependencies-count');
         const overdueTasksEl = document.getElementById('overdue-tasks');
         const overdueProgressEl = document.getElementById('overdue-progress');
-        const highPriorityTasksEl = document.getElementById('high-priority-tasks');
-        const highPriorityProgressEl = document.getElementById('high-priority-progress');
         
         // Inicializar Supabase
         function initSupabase() {
@@ -1123,10 +1415,11 @@
             kanbanContainer.style.display = 'none';
             tasks = [];
             filteredTasks = [];
+            tags = [];
             
             // Destruir gráficos
             if (statusChart) statusChart.destroy();
-            if (priorityChart) priorityChart.destroy();
+            if (methodChart) methodChart.destroy();
         }
         
         // Carregar tarefas do Supabase
@@ -1168,6 +1461,11 @@
                     priority: 'medium',
                     due_date: '2024-01-20',
                     assignee: 'admin',
+                    estimated_cost: 500.00,
+                    actual_cost: 450.00,
+                    dependencies: [2, 3],
+                    resolution_method: 'desenvolvimento',
+                    tags: ['dev', 'setup', 'ambiente'],
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 },
@@ -1179,6 +1477,11 @@
                     priority: 'high',
                     due_date: '2024-01-25',
                     assignee: 'admin',
+                    estimated_cost: 1200.00,
+                    actual_cost: 800.00,
+                    dependencies: [],
+                    resolution_method: 'desenvolvimento',
+                    tags: ['segurança', 'login', 'auth'],
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 },
@@ -1189,7 +1492,12 @@
                     status: 'todo',
                     priority: 'high',
                     due_date: '2024-01-18',
-                    assignee: 'team',
+                    assignee: 'Maykell',
+                    estimated_cost: 800.00,
+                    actual_cost: null,
+                    dependencies: [1],
+                    resolution_method: 'design',
+                    tags: ['design', 'mobile', 'responsivo'],
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 },
@@ -1200,7 +1508,12 @@
                     status: 'todo',
                     priority: 'low',
                     due_date: '2024-01-30',
-                    assignee: 'team',
+                    assignee: 'Anthony',
+                    estimated_cost: 400.00,
+                    actual_cost: null,
+                    dependencies: [1, 2],
+                    resolution_method: 'documentacao',
+                    tags: ['docs', 'manual', 'tutorial'],
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 },
@@ -1212,6 +1525,11 @@
                     priority: 'medium',
                     due_date: '2024-01-22',
                     assignee: 'admin',
+                    estimated_cost: 600.00,
+                    actual_cost: 300.00,
+                    dependencies: [2],
+                    resolution_method: 'testes',
+                    tags: ['testes', 'qa', 'qualidade'],
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 },
@@ -1222,7 +1540,12 @@
                     status: 'done',
                     priority: 'low',
                     due_date: '2024-01-15',
-                    assignee: 'team',
+                    assignee: 'admin',
+                    estimated_cost: 200.00,
+                    actual_cost: 150.00,
+                    dependencies: [],
+                    resolution_method: 'reuniao',
+                    tags: ['reunião', 'planejamento', 'sprint'],
                     created_at: new Date().toISOString(),
                     updated_at: new Date().toISOString()
                 }
@@ -1243,7 +1566,9 @@
             if (searchTerm) {
                 filtered = filtered.filter(task => 
                     task.title.toLowerCase().includes(searchTerm) ||
-                    (task.description && task.description.toLowerCase().includes(searchTerm))
+                    (task.description && task.description.toLowerCase().includes(searchTerm)) ||
+                    (task.tags && task.tags.some(tag => tag.toLowerCase().includes(searchTerm))) ||
+                    (task.resolution_method && task.resolution_method.toLowerCase().includes(searchTerm))
                 );
             }
             
@@ -1289,6 +1614,20 @@
                 });
             }
             
+            // Filtro de dependências
+            const dependenciesFilter = filterDependencies.value;
+            if (dependenciesFilter !== 'all') {
+                if (dependenciesFilter === 'with') {
+                    filtered = filtered.filter(task => 
+                        task.dependencies && task.dependencies.length > 0
+                    );
+                } else if (dependenciesFilter === 'without') {
+                    filtered = filtered.filter(task => 
+                        !task.dependencies || task.dependencies.length === 0
+                    );
+                }
+            }
+            
             filteredTasks = filtered;
             renderTasks();
             updateAnalytics();
@@ -1300,6 +1639,7 @@
             filterPriority.value = 'all';
             filterStatus.value = 'all';
             filterDate.value = 'all';
+            filterDependencies.value = 'all';
             filteredTasks = [...tasks];
             renderTasks();
             updateAnalytics();
@@ -1309,8 +1649,26 @@
         // Atualizar analytics
         function updateAnalytics() {
             const total = tasks.length;
-            const done = tasks.filter(t => t.status === 'done').length;
-            const completionRate = total > 0 ? Math.round((done / total) * 100) : 0;
+            
+            // Cálculo de custos
+            let totalEstimated = 0;
+            let totalActual = 0;
+            let tasksWithCost = 0;
+            
+            tasks.forEach(task => {
+                if (task.estimated_cost) {
+                    totalEstimated += parseFloat(task.estimated_cost);
+                    tasksWithCost++;
+                }
+                if (task.actual_cost) {
+                    totalActual += parseFloat(task.actual_cost);
+                }
+            });
+            
+            // Tarefas com dependências
+            const tasksWithDependencies = tasks.filter(task => 
+                task.dependencies && task.dependencies.length > 0
+            ).length;
             
             // Tarefas atrasadas
             const today = new Date();
@@ -1321,21 +1679,27 @@
                 return dueDate < today;
             }).length;
             
-            // Tarefas de alta prioridade
-            const highPriority = tasks.filter(t => t.priority === 'high').length;
-            
             // Atualizar elementos
             totalTasksEl.textContent = total;
-            completionRateEl.textContent = `${completionRate}%`;
-            completionProgressEl.style.width = `${completionRate}%`;
+            
+            // Formatar custos
+            const formatCurrency = (value) => {
+                return new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(value);
+            };
+            
+            totalCostEl.textContent = `${formatCurrency(totalEstimated)}`;
+            if (totalActual > 0) {
+                totalCostEl.textContent += ` / ${formatCurrency(totalActual)}`;
+            }
+            
+            dependenciesCountEl.textContent = tasksWithDependencies;
             
             overdueTasksEl.textContent = overdue;
             const overduePercent = total > 0 ? Math.round((overdue / total) * 100) : 0;
             overdueProgressEl.style.width = `${overduePercent}%`;
-            
-            highPriorityTasksEl.textContent = highPriority;
-            const highPriorityPercent = total > 0 ? Math.round((highPriority / total) * 100) : 0;
-            highPriorityProgressEl.style.width = `${highPriorityPercent}%`;
         }
         
         // Atualizar gráficos
@@ -1347,12 +1711,12 @@
                 'done': tasks.filter(t => t.status === 'done').length
             };
             
-            // Dados para gráfico de prioridade
-            const priorityData = {
-                'high': tasks.filter(t => t.priority === 'high').length,
-                'medium': tasks.filter(t => t.priority === 'medium').length,
-                'low': tasks.filter(t => t.status === 'low').length
-            };
+            // Dados para gráfico de métodos
+            const methodData = {};
+            tasks.forEach(task => {
+                const method = task.resolution_method || 'Não especificado';
+                methodData[method] = (methodData[method] || 0) + 1;
+            });
             
             // Configuração dos gráficos
             const chartOptions = {
@@ -1387,26 +1751,27 @@
                 options: chartOptions
             });
             
-            // Gráfico de prioridade (bar)
-            const priorityCtx = document.getElementById('priority-chart').getContext('2d');
-            if (priorityChart) priorityChart.destroy();
+            // Gráfico de métodos (bar)
+            const methodCtx = document.getElementById('method-chart').getContext('2d');
+            if (methodChart) methodChart.destroy();
             
-            priorityChart = new Chart(priorityCtx, {
+            const methodLabels = Object.keys(methodData);
+            const methodValues = Object.values(methodData);
+            
+            methodChart = new Chart(methodCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Alta', 'Média', 'Baixa'],
+                    labels: methodLabels,
                     datasets: [{
-                        label: 'Tarefas por Prioridade',
-                        data: [priorityData.high, priorityData.medium, priorityData.low],
+                        label: 'Tarefas por Método',
+                        data: methodValues,
                         backgroundColor: [
-                            '#c62828',
-                            '#f57c00',
-                            '#2e7d32'
+                            '#667eea', '#764ba2', '#36D1DC', '#5B86E5', 
+                            '#FF9A9E', '#FAD0C4', '#A1C4FD', '#C2E9FB'
                         ],
                         borderColor: [
-                            '#b71c1c',
-                            '#e65100',
-                            '#1b5e20'
+                            '#5a67d8', '#6b4399', '#2dc1d4', '#4a76e0',
+                            '#e68a8e', '#e7c0bc', '#91b4fc', '#b2d9fa'
                         ],
                         borderWidth: 1
                     }]
@@ -1515,6 +1880,95 @@
                 `;
             }
             
+            // 💰 CUSTO
+            let costSection = '';
+            if (task.estimated_cost || task.actual_cost) {
+                const estimated = task.estimated_cost ? parseFloat(task.estimated_cost) : 0;
+                const actual = task.actual_cost ? parseFloat(task.actual_cost) : 0;
+                const diff = actual - estimated;
+                
+                let costHtml = '<div class="cost-info">';
+                if (task.estimated_cost) {
+                    costHtml += `<span class="estimated-cost">Estimado: R$ ${estimated.toFixed(2)}</span>`;
+                }
+                if (task.actual_cost) {
+                    costHtml += `<span class="actual-cost">Real: R$ ${actual.toFixed(2)}</span>`;
+                }
+                if (task.actual_cost && task.estimated_cost && diff > 0) {
+                    costHtml += `<span class="cost-overrun">+R$ ${diff.toFixed(2)}</span>`;
+                }
+                costHtml += '</div>';
+                
+                costSection = `
+                    <div class="task-section">
+                        <h4><i class="fas fa-money-bill-wave"></i> Custo</h4>
+                        ${costHtml}
+                    </div>
+                `;
+            }
+            
+            // 🔗 DEPENDÊNCIAS
+            let dependenciesSection = '';
+            if (task.dependencies && task.dependencies.length > 0) {
+                const deps = task.dependencies;
+                const dependencyTasks = tasks.filter(t => deps.includes(t.id));
+                
+                let dependenciesHtml = '<ul class="dependencies-list">';
+                dependencyTasks.forEach(depTask => {
+                    const depStatus = depTask.status === 'done' ? '✓' : '⏳';
+                    dependenciesHtml += `
+                        <li>
+                            <span class="dependency-item ${depTask.status !== 'done' ? 'dependency-warning' : ''}">
+                                ${depStatus} Tarefa #${depTask.id}: ${depTask.title.substring(0, 20)}...
+                            </span>
+                        </li>
+                    `;
+                });
+                
+                if (dependencyTasks.length < deps.length) {
+                    dependenciesHtml += `<li><span class="dependency-item dependency-warning">⏳ ${deps.length - dependencyTasks.length} dependência(s) não encontrada(s)</span></li>`;
+                }
+                
+                dependenciesHtml += '</ul>';
+                
+                dependenciesSection = `
+                    <div class="task-section">
+                        <h4><i class="fas fa-link"></i> Dependências (${deps.length})</h4>
+                        ${dependenciesHtml}
+                    </div>
+                `;
+            }
+            
+            // 🛠️ MÉTODO
+            let methodSection = '';
+            if (task.resolution_method) {
+                methodSection = `
+                    <div class="task-section">
+                        <h4><i class="fas fa-tools"></i> Método</h4>
+                        <div class="task-section-content">
+                            <span class="method-badge">${task.resolution_method}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Tags
+            let tagsSection = '';
+            if (task.tags && task.tags.length > 0) {
+                const tagsHtml = task.tags.map(tag => 
+                    `<span class="tag">${tag}</span>`
+                ).join('');
+                
+                tagsSection = `
+                    <div class="task-section">
+                        <h4><i class="fas fa-tags"></i> Tags</h4>
+                        <div class="tags-container">
+                            ${tagsHtml}
+                        </div>
+                    </div>
+                `;
+            }
+            
             taskElement.innerHTML = `
                 <div class="task-header">
                     <div class="task-title">${task.title}</div>
@@ -1528,6 +1982,12 @@
                     </div>
                 </div>
                 <div class="task-description">${task.description || 'Sem descrição'}</div>
+                
+                ${costSection}
+                ${dependenciesSection}
+                ${methodSection}
+                ${tagsSection}
+                
                 <div class="task-footer">
                     <div class="task-meta">
                         ${priorityBadge}
@@ -1620,10 +2080,54 @@
             });
         }
         
+        // Sistema de tags
+        function initTagsSystem() {
+            tags = [];
+            
+            tagsInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const tag = tagsInput.value.trim();
+                    if (tag && !tags.includes(tag)) {
+                        tags.push(tag);
+                        updateTagsDisplay();
+                        tagsInput.value = '';
+                    }
+                }
+            });
+        }
+        
+        function updateTagsDisplay() {
+            tagsContainer.innerHTML = '';
+            
+            tags.forEach((tag, index) => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'modal-tag';
+                tagElement.innerHTML = `
+                    ${tag}
+                    <span class="remove-tag" data-index="${index}">×</span>
+                `;
+                tagsContainer.appendChild(tagElement);
+            });
+            
+            tagsContainer.appendChild(tagsInput);
+            
+            // Adicionar eventos de remoção
+            document.querySelectorAll('.remove-tag').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    tags.splice(index, 1);
+                    updateTagsDisplay();
+                });
+            });
+        }
+        
         // Modal functions
         function openTaskModal() {
             isEditing = false;
             currentTaskId = null;
+            tags = [];
+            
             modalTitle.textContent = 'Nova Tarefa';
             taskTitleInput.value = '';
             taskDescriptionInput.value = '';
@@ -1631,6 +2135,15 @@
             taskPrioritySelect.value = 'medium';
             taskDueDateInput.value = '';
             taskAssigneeSelect.value = 'admin';
+            
+            // Novos campos
+            estimatedCostInput.value = '';
+            actualCostInput.value = '';
+            taskDependenciesInput.value = '';
+            resolutionMethodSelect.value = '';
+            
+            updateTagsDisplay();
+            
             taskModal.style.display = 'flex';
             showLoading(false);
         }
@@ -1641,6 +2154,8 @@
             
             isEditing = true;
             currentTaskId = taskId;
+            tags = task.tags || [];
+            
             modalTitle.textContent = 'Editar Tarefa';
             taskTitleInput.value = task.title;
             taskDescriptionInput.value = task.description || '';
@@ -1648,12 +2163,31 @@
             taskPrioritySelect.value = task.priority || 'medium';
             taskDueDateInput.value = task.due_date || '';
             taskAssigneeSelect.value = task.assignee || 'admin';
+            
+            // Novos campos
+            estimatedCostInput.value = task.estimated_cost || '';
+            actualCostInput.value = task.actual_cost || '';
+            taskDependenciesInput.value = task.dependencies ? task.dependencies.join(', ') : '';
+            resolutionMethodSelect.value = task.resolution_method || '';
+            
+            updateTagsDisplay();
+            
             taskModal.style.display = 'flex';
             showLoading(false);
         }
         
         async function saveTask(event) {
             event.preventDefault();
+            
+            // Processar dependências
+            const dependenciesText = taskDependenciesInput.value.trim();
+            let dependenciesArray = [];
+            if (dependenciesText) {
+                dependenciesArray = dependenciesText
+                    .split(',')
+                    .map(id => parseInt(id.trim()))
+                    .filter(id => !isNaN(id) && id > 0);
+            }
             
             const taskData = {
                 title: taskTitleInput.value.trim(),
@@ -1662,6 +2196,14 @@
                 priority: taskPrioritySelect.value,
                 due_date: taskDueDateInput.value || null,
                 assignee: taskAssigneeSelect.value,
+                
+                // Novos campos
+                estimated_cost: estimatedCostInput.value ? parseFloat(estimatedCostInput.value) : null,
+                actual_cost: actualCostInput.value ? parseFloat(actualCostInput.value) : null,
+                dependencies: dependenciesArray.length > 0 ? dependenciesArray : null,
+                resolution_method: resolutionMethodSelect.value || null,
+                tags: tags.length > 0 ? tags : null,
+                
                 user_id: currentUser,
                 updated_at: new Date().toISOString()
             };
@@ -1767,6 +2309,7 @@
         filterPriority.addEventListener('change', () => applyFilters());
         filterStatus.addEventListener('change', () => applyFilters());
         filterDate.addEventListener('change', () => applyFilters());
+        filterDependencies.addEventListener('change', () => applyFilters());
         clearFiltersBtn.addEventListener('click', clearFilters);
         
         // Fechar modal ao clicar fora
@@ -1776,12 +2319,21 @@
             }
         });
         
-        // Inicializar drag and drop após carregar tarefas
-        setTimeout(() => initDragAndDrop(), 500);
+        // Inicializar
+        function init() {
+            initTagsSystem();
+            setTimeout(() => initDragAndDrop(), 500);
+            
+            // Para debug: login automático
+            // setTimeout(() => login(FIXED_USERNAME, FIXED_PASSWORD), 100);
+        }
         
-        // Para debug: login automático
-        // setTimeout(() => login('admin', 'admin123'), 100);
+        // Inicializar quando o DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
-
 </html>
