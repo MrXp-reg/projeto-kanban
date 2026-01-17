@@ -630,10 +630,146 @@
             animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+        /* Sistema de Comentários */
+        .comments-section {
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comments-title {
+            font-size: 0.9rem;
+            color: #555;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .comments-count {
+            background: #667eea;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .comment-form {
+            margin-bottom: 15px;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 60px;
+            margin-bottom: 8px;
+        }
+
+        .comment-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .comment-submit-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            float: right;
+        }
+
+        .comment-submit-btn:hover {
+            background: #5a67d8;
+        }
+
+        .comments-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .comment {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .comment-user {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #333;
+        }
+
+        .comment-date {
+            font-size: 0.7rem;
+            color: #777;
+        }
+
+        .comment-content {
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .comment-action-btn {
+            background: none;
+            border: none;
+            color: #777;
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .comment-action-btn:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .view-comments-btn {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            margin-top: 8px;
+        }
+
+        .view-comments-btn:hover {
+            background: #bbdefb;
         }
 
         /* Task Footer */
@@ -656,7 +792,7 @@
             flex-wrap: wrap;
         }
 
-        /* Modal */
+        /* Modal de Tarefa */
         .modal {
             display: none;
             position: fixed;
@@ -910,6 +1046,37 @@
             to { opacity: 0; }
         }
 
+        /* Modal de Comentários */
+        .comments-modal .modal-content {
+            max-width: 600px;
+        }
+
+        .comments-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .comments-modal-title {
+            font-size: 1.3rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-info-in-comments {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
         /* Responsividade */
         @media (max-width: 1200px) {
             .kanban-board {
@@ -954,6 +1121,16 @@
             
             .cost-fields {
                 grid-template-columns: 1fr;
+            }
+            
+            .comment-form {
+                flex-direction: column;
+            }
+            
+            .comment-submit-btn {
+                float: none;
+                width: 100%;
+                margin-top: 10px;
             }
         }
 
@@ -1098,12 +1275,9 @@
             </div>
             
             <div class="stat-card">
-                <h3><i class="fas fa-exclamation-triangle"></i> Tarefas Atrasadas</h3>
-                <div class="stat-value" id="overdue-tasks">0</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="overdue-progress" style="width: 0%; background: #e74c3c;"></div>
-                </div>
-                <div class="stat-subtitle">Precisa de atenção</div>
+                <h3><i class="fas fa-comments"></i> Comentários</h3>
+                <div class="stat-value" id="comments-count">0</div>
+                <div class="stat-subtitle">Total de comentários</div>
             </div>
         </div>
 
@@ -1281,6 +1455,43 @@
         </div>
     </div>
 
+    <!-- Modal para visualizar/gerenciar comentários -->
+    <div class="modal comments-modal" id="comments-modal">
+        <div class="modal-content">
+            <div class="comments-modal-header">
+                <h2 class="comments-modal-title">
+                    <i class="fas fa-comments"></i> Comentários da Tarefa
+                </h2>
+                <button class="close-modal" id="close-comments-modal">&times;</button>
+            </div>
+            
+            <div class="task-info-in-comments" id="task-info-comments"></div>
+            
+            <!-- Formulário para adicionar comentário -->
+            <div class="comment-form" id="add-comment-form">
+                <textarea 
+                    class="comment-textarea" 
+                    id="new-comment-content" 
+                    placeholder="Digite seu comentário aqui..."
+                    rows="3"
+                ></textarea>
+                <button type="button" class="comment-submit-btn" id="submit-comment-btn">
+                    <i class="fas fa-paper-plane"></i> Enviar Comentário
+                </button>
+                <div style="clear: both;"></div>
+            </div>
+            
+            <!-- Lista de comentários -->
+            <div class="comments-list" id="comments-list">
+                <div class="loading">Carregando comentários...</div>
+            </div>
+            
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" id="close-comments-btn">Fechar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Configuração do Supabase
         const SUPABASE_URL = 'https://ymmqtopcyjhbctocqhum.supabase.co';
@@ -1294,12 +1505,14 @@
         let currentUser = null;
         let tasks = [];
         let currentTaskId = null;
+        let currentTaskForComments = null;
         let isEditing = false;
         let supabaseClient = null;
         let statusChart = null;
         let methodChart = null;
         let filteredTasks = [];
         let tags = [];
+        let taskComments = {}; // {taskId: [comments]}
         
         // Elementos DOM
         const loginContainer = document.getElementById('login-container');
@@ -1331,6 +1544,16 @@
         const tagsContainer = document.getElementById('tags-container');
         const tagsInput = document.getElementById('task-tags-input');
         
+        // Elementos de comentários
+        const commentsModal = document.getElementById('comments-modal');
+        const closeCommentsModalBtn = document.getElementById('close-comments-modal');
+        const closeCommentsBtn = document.getElementById('close-comments-btn');
+        const taskInfoComments = document.getElementById('task-info-comments');
+        const newCommentContent = document.getElementById('new-comment-content');
+        const submitCommentBtn = document.getElementById('submit-comment-btn');
+        const commentsList = document.getElementById('comments-list');
+        const addCommentForm = document.getElementById('add-comment-form');
+        
         const saveBtn = document.getElementById('save-btn');
         const saveBtnText = document.getElementById('save-btn-text');
         const saveBtnLoading = document.getElementById('save-btn-loading');
@@ -1347,8 +1570,7 @@
         const totalTasksEl = document.getElementById('total-tasks');
         const totalCostEl = document.getElementById('total-cost');
         const dependenciesCountEl = document.getElementById('dependencies-count');
-        const overdueTasksEl = document.getElementById('overdue-tasks');
-        const overdueProgressEl = document.getElementById('overdue-progress');
+        const commentsCountEl = document.getElementById('comments-count');
         
         // Inicializar Supabase
         function initSupabase() {
@@ -1416,6 +1638,7 @@
             tasks = [];
             filteredTasks = [];
             tags = [];
+            taskComments = {};
             
             // Destruir gráficos
             if (statusChart) statusChart.destroy();
@@ -1426,15 +1649,18 @@
         async function loadTasks() {
             try {
                 // Buscar tarefas
-                const { data, error } = await supabaseClient
+                const { data: tasksData, error: tasksError } = await supabaseClient
                     .from('tasks')
                     .select('*')
                     .order('created_at', { ascending: false });
                 
-                if (error) throw error;
+                if (tasksError) throw tasksError;
                 
-                tasks = data || [];
+                tasks = tasksData || [];
                 filteredTasks = [...tasks];
+                
+                // Carregar comentários de todas as tarefas
+                await loadAllComments();
                 
                 // Atualizar interface
                 updateAnalytics();
@@ -1448,6 +1674,68 @@
                 showToast('Erro ao carregar tarefas. Usando dados de exemplo.', 'error');
                 loadMockData();
             }
+        }
+        
+        // Carregar todos os comentários
+        async function loadAllComments() {
+            try {
+                taskComments = {};
+                
+                // Buscar comentários de todas as tarefas
+                const { data: commentsData, error: commentsError } = await supabaseClient
+                    .from('task_comments')
+                    .select('*')
+                    .order('created_at', { ascending: true });
+                
+                if (commentsError) throw commentsError;
+                
+                // Organizar comentários por task_id
+                if (commentsData) {
+                    commentsData.forEach(comment => {
+                        if (!taskComments[comment.task_id]) {
+                            taskComments[comment.task_id] = [];
+                        }
+                        taskComments[comment.task_id].push(comment);
+                    });
+                }
+                
+                // Atualizar estatísticas
+                updateCommentsStatistics();
+                
+            } catch (error) {
+                console.error('Erro ao carregar comentários:', error);
+                showToast('Erro ao carregar comentários.', 'error');
+            }
+        }
+        
+        // Carregar comentários de uma tarefa específica
+        async function loadTaskComments(taskId) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('task_comments')
+                    .select('*')
+                    .eq('task_id', taskId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                
+                taskComments[taskId] = data || [];
+                return taskComments[taskId];
+                
+            } catch (error) {
+                console.error('Erro ao carregar comentários da tarefa:', error);
+                showToast('Erro ao carregar comentários.', 'error');
+                return [];
+            }
+        }
+        
+        // Atualizar estatísticas de comentários
+        function updateCommentsStatistics() {
+            let totalComments = 0;
+            Object.values(taskComments).forEach(comments => {
+                totalComments += comments.length;
+            });
+            commentsCountEl.textContent = totalComments;
         }
         
         // Dados mockados
@@ -1551,10 +1839,49 @@
                 }
             ];
             
+            // Comentários mockados
+            taskComments = {
+                1: [
+                    {
+                        id: 1,
+                        task_id: 1,
+                        user_id: 'admin',
+                        content: 'Ambiente configurado com sucesso!',
+                        created_at: '2024-01-15T10:30:00Z'
+                    },
+                    {
+                        id: 2,
+                        task_id: 1,
+                        user_id: 'Maykell',
+                        content: 'Precisamos adicionar mais dependências para o ambiente de produção.',
+                        created_at: '2024-01-16T14:20:00Z'
+                    }
+                ],
+                2: [
+                    {
+                        id: 3,
+                        task_id: 2,
+                        user_id: 'admin',
+                        content: 'Sistema de autenticação implementado com JWT.',
+                        created_at: '2024-01-18T09:15:00Z'
+                    }
+                ],
+                5: [
+                    {
+                        id: 4,
+                        task_id: 5,
+                        user_id: 'Anthony',
+                        content: 'Testes unitários estão 80% concluídos.',
+                        created_at: '2024-01-19T16:45:00Z'
+                    }
+                ]
+            };
+            
             filteredTasks = [...tasks];
             updateAnalytics();
             applyFilters();
             updateCharts();
+            updateCommentsStatistics();
         }
         
         // Aplicar filtros
@@ -1653,12 +1980,10 @@
             // Cálculo de custos
             let totalEstimated = 0;
             let totalActual = 0;
-            let tasksWithCost = 0;
             
             tasks.forEach(task => {
                 if (task.estimated_cost) {
                     totalEstimated += parseFloat(task.estimated_cost);
-                    tasksWithCost++;
                 }
                 if (task.actual_cost) {
                     totalActual += parseFloat(task.actual_cost);
@@ -1669,15 +1994,6 @@
             const tasksWithDependencies = tasks.filter(task => 
                 task.dependencies && task.dependencies.length > 0
             ).length;
-            
-            // Tarefas atrasadas
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const overdue = tasks.filter(task => {
-                if (!task.due_date || task.status === 'done') return false;
-                const dueDate = new Date(task.due_date);
-                return dueDate < today;
-            }).length;
             
             // Atualizar elementos
             totalTasksEl.textContent = total;
@@ -1696,10 +2012,6 @@
             }
             
             dependenciesCountEl.textContent = tasksWithDependencies;
-            
-            overdueTasksEl.textContent = overdue;
-            const overduePercent = total > 0 ? Math.round((overdue / total) * 100) : 0;
-            overdueProgressEl.style.width = `${overduePercent}%`;
         }
         
         // Atualizar gráficos
@@ -1969,12 +2281,61 @@
                 `;
             }
             
+            // Comentários
+            const comments = taskComments[task.id] || [];
+            const commentsCount = comments.length;
+            let commentsSection = '';
+            
+            if (commentsCount > 0) {
+                // Pegar os 2 comentários mais recentes
+                const recentComments = [...comments].slice(-2);
+                
+                let commentsHtml = recentComments.map(comment => {
+                    const date = new Date(comment.created_at).toLocaleDateString('pt-BR');
+                    return `
+                        <div class="comment">
+                            <div class="comment-header">
+                                <div class="comment-user">${comment.user_id}</div>
+                                <div class="comment-date">${date}</div>
+                            </div>
+                            <div class="comment-content">${comment.content.substring(0, 50)}${comment.content.length > 50 ? '...' : ''}</div>
+                        </div>
+                    `;
+                }).join('');
+                
+                commentsSection = `
+                    <div class="comments-section">
+                        <div class="comments-header">
+                            <div class="comments-title">
+                                <i class="far fa-comment"></i> Comentários
+                                <span class="comments-count">${commentsCount}</span>
+                            </div>
+                        </div>
+                        ${commentsHtml}
+                        <button class="view-comments-btn view-comments" data-id="${task.id}">
+                            <i class="fas fa-eye"></i> Ver todos os comentários (${commentsCount})
+                        </button>
+                    </div>
+                `;
+            } else {
+                commentsSection = `
+                    <div class="comments-section">
+                        <button class="view-comments-btn view-comments" data-id="${task.id}">
+                            <i class="far fa-comment"></i> Adicionar comentário
+                        </button>
+                    </div>
+                `;
+            }
+            
             taskElement.innerHTML = `
                 <div class="task-header">
                     <div class="task-title">${task.title}</div>
                     <div class="task-actions">
                         <button class="task-btn edit-btn" data-id="${task.id}" title="Editar">
                             <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="task-btn comment-btn" data-id="${task.id}" title="Comentários">
+                            <i class="far fa-comment"></i>
                         </button>
                         <button class="task-btn delete-btn" data-id="${task.id}" title="Excluir">
                             <i class="fas fa-trash"></i>
@@ -1987,6 +2348,7 @@
                 ${dependenciesSection}
                 ${methodSection}
                 ${tagsSection}
+                ${commentsSection}
                 
                 <div class="task-footer">
                     <div class="task-meta">
@@ -2005,8 +2367,173 @@
             // Adicionar eventos
             taskElement.querySelector('.edit-btn').addEventListener('click', () => editTask(task.id));
             taskElement.querySelector('.delete-btn').addEventListener('click', () => deleteTask(task.id));
+            taskElement.querySelector('.comment-btn').addEventListener('click', () => openCommentsModal(task.id));
+            if (taskElement.querySelector('.view-comments')) {
+                taskElement.querySelector('.view-comments').addEventListener('click', () => openCommentsModal(task.id));
+            }
             
             return taskElement;
+        }
+        
+        // Modal de comentários
+        async function openCommentsModal(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+            
+            currentTaskForComments = task;
+            
+            // Atualizar informações da tarefa no modal
+            taskInfoComments.innerHTML = `
+                <strong>${task.title}</strong><br>
+                <small>Status: ${task.status === 'todo' ? 'A Fazer' : task.status === 'progress' ? 'Em Progresso' : 'Concluído'} | 
+                Prioridade: ${task.priority === 'high' ? 'Alta' : task.priority === 'medium' ? 'Média' : 'Baixa'} | 
+                Responsável: ${task.assignee}</small>
+            `;
+            
+            // Limpar campo de novo comentário
+            newCommentContent.value = '';
+            
+            // Carregar comentários
+            const comments = await loadTaskComments(taskId);
+            renderComments(comments);
+            
+            // Mostrar modal
+            commentsModal.style.display = 'flex';
+        }
+        
+        // Renderizar comentários
+        function renderComments(comments) {
+            commentsList.innerHTML = '';
+            
+            if (!comments || comments.length === 0) {
+                commentsList.innerHTML = '<div class="loading">Nenhum comentário ainda. Seja o primeiro a comentar!</div>';
+                return;
+            }
+            
+            comments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                
+                const date = new Date(comment.created_at);
+                const formattedDate = date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <div class="comment-user">${comment.user_id}</div>
+                        <div class="comment-date">${formattedDate}</div>
+                    </div>
+                    <div class="comment-content">${comment.content}</div>
+                    ${comment.user_id === currentUser ? `
+                        <div class="comment-actions">
+                            <button class="comment-action-btn delete-comment-btn" data-id="${comment.id}">
+                                <i class="fas fa-trash"></i> Excluir
+                            </button>
+                        </div>
+                    ` : ''}
+                `;
+                
+                // Adicionar evento para excluir comentário
+                if (comment.user_id === currentUser) {
+                    const deleteBtn = commentElement.querySelector('.delete-comment-btn');
+                    deleteBtn.addEventListener('click', () => deleteComment(comment.id, currentTaskForComments.id));
+                }
+                
+                commentsList.appendChild(commentElement);
+            });
+        }
+        
+        // Adicionar comentário
+        async function addComment() {
+            const content = newCommentContent.value.trim();
+            if (!content) {
+                showToast('Digite um comentário antes de enviar.', 'error');
+                return;
+            }
+            
+            if (!currentTaskForComments) {
+                showToast('Nenhuma tarefa selecionada.', 'error');
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('task_comments')
+                    .insert([{
+                        task_id: currentTaskForComments.id,
+                        user_id: currentUser,
+                        content: content,
+                        created_at: new Date().toISOString(),
+                        updated_at: new Date().toISOString()
+                    }])
+                    .select();
+                
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    // Adicionar comentário localmente
+                    if (!taskComments[currentTaskForComments.id]) {
+                        taskComments[currentTaskForComments.id] = [];
+                    }
+                    taskComments[currentTaskForComments.id].push(data[0]);
+                    
+                    // Limpar campo
+                    newCommentContent.value = '';
+                    
+                    // Recarregar comentários
+                    const comments = await loadTaskComments(currentTaskForComments.id);
+                    renderComments(comments);
+                    
+                    // Atualizar estatísticas
+                    updateCommentsStatistics();
+                    
+                    // Atualizar tarefa no kanban
+                    applyFilters();
+                    
+                    showToast('Comentário adicionado com sucesso!', 'success');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao adicionar comentário:', error);
+                showToast('Erro ao adicionar comentário: ' + error.message, 'error');
+            }
+        }
+        
+        // Excluir comentário
+        async function deleteComment(commentId, taskId) {
+            if (!confirm('Tem certeza que deseja excluir este comentário?')) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('task_comments')
+                    .delete()
+                    .eq('id', commentId);
+                
+                if (error) throw error;
+                
+                // Remover comentário localmente
+                if (taskComments[taskId]) {
+                    taskComments[taskId] = taskComments[taskId].filter(c => c.id !== commentId);
+                }
+                
+                // Recarregar comentários
+                const comments = await loadTaskComments(taskId);
+                renderComments(comments);
+                
+                // Atualizar estatísticas
+                updateCommentsStatistics();
+                
+                // Atualizar tarefa no kanban
+                applyFilters();
+                
+                showToast('Comentário excluído com sucesso!', 'success');
+                
+            } catch (error) {
+                console.error('Erro ao excluir comentário:', error);
+                showToast('Erro ao excluir comentário: ' + error.message, 'error');
+            }
         }
         
         // Drag and drop
@@ -2270,19 +2797,30 @@
             if (!confirm('Tem certeza que deseja excluir esta tarefa?')) return;
             
             try {
-                const { error } = await supabaseClient
+                // Primeiro excluir comentários associados
+                const { error: commentsError } = await supabaseClient
+                    .from('task_comments')
+                    .delete()
+                    .eq('task_id', taskId);
+                
+                if (commentsError) throw commentsError;
+                
+                // Depois excluir a tarefa
+                const { error: taskError } = await supabaseClient
                     .from('tasks')
                     .delete()
                     .eq('id', taskId);
                 
-                if (error) throw error;
+                if (taskError) throw taskError;
                 
                 // Remover localmente
                 tasks = tasks.filter(t => t.id !== taskId);
                 filteredTasks = filteredTasks.filter(t => t.id !== taskId);
+                delete taskComments[taskId];
                 
                 // Atualizar interface
                 updateAnalytics();
+                updateCommentsStatistics();
                 applyFilters();
                 updateCharts();
                 showToast('Tarefa excluída!', 'success');
@@ -2304,6 +2842,17 @@
         cancelBtn.addEventListener('click', () => taskModal.style.display = 'none');
         taskForm.addEventListener('submit', saveTask);
         
+        // Comentários
+        submitCommentBtn.addEventListener('click', addComment);
+        newCommentContent.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                e.preventDefault();
+                addComment();
+            }
+        });
+        closeCommentsModalBtn.addEventListener('click', () => commentsModal.style.display = 'none');
+        closeCommentsBtn.addEventListener('click', () => commentsModal.style.display = 'none');
+        
         // Filtros
         searchInput.addEventListener('input', () => applyFilters());
         filterPriority.addEventListener('change', () => applyFilters());
@@ -2316,6 +2865,9 @@
         window.addEventListener('click', (event) => {
             if (event.target === taskModal) {
                 taskModal.style.display = 'none';
+            }
+            if (event.target === commentsModal) {
+                commentsModal.style.display = 'none';
             }
         });
         
